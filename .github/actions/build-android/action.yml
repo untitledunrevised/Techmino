@@ -58,6 +58,9 @@ runs:
         7z a -tzip love-android/app/src/main/assets/game.love libAndroid
         echo "${{ inputs.SIGNING_KEY }}" | base64 -d > love-android/app/android.keystore
         python3 .github/workflows/updateVersion.py -T Android${{ inputs.type }} -C ${{ inputs.code }} -N ${{ inputs.name }} -S ${{ inputs.KEY_STORE_PASSWORD }} -A ${{ inputs.ALIAS }} -K ${{ inputs.KEY_PASSWORD }}
+    - uses: burrunan/gradle-cache-action@v1
+      with:
+        gradle-version: 4.6
     - name: Build Techmino
       shell: bash
       run: |
