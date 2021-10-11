@@ -67,7 +67,7 @@ runs:
       run: |
         chmod 777 love-android/gradlew
         cd love-android/
-        ./gradlew assembleRelease
+        ./gradlew assembleRelease --build-cache
     - name: rename apk
       shell: bash
       run: mv love-android/app/build/outputs/apk/release/app-release.apk ${{ inputs.file-path }}
