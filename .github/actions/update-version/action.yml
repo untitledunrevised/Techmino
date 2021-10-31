@@ -11,10 +11,10 @@ runs:
     - shell: bash
       name: update snapshot saving folder
       run: |
-        type='${{ inputs.type }}'
-        if [ "${type,,}" == "snapshot"]
-        then perl -p -e "s/t.identity='Techmino'/t.identity='Techmino_Snapshot'/g" -i conf.lua
-        fi
+        perl -p -e "
+          s/t.identity='Techmino'/t.identity='Techmino_Snapshot'/g
+            if lc'${{ inputs.type }}' eq 'snapshot'
+        " -i conf.lua
     - shell: bash
       run: |
         perl -p -e '
