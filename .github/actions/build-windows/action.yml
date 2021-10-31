@@ -31,17 +31,16 @@ runs:
         url: http://www.angusj.com/resourcehacker/resource_hacker.zip
     - uses: ./.github/actions/build-love
     - name: update Windows template
-      shell: python
+      shell: bash
       run: |
-        Version = '${{ inputs.version }}'.replace('V', '')
-        FileVersion = (f"{Version.replace('.', ',')},0")
-        with open('./.github/build/Windows/Techmino.rc.template', 'r', encoding='utf8') as file:
-          data = file.read()
-          data = data\
-            .replace('@FileVersion', FileVersion)\
-            .replace('@Version', Version)
-        with open('Techmino.rc', 'w+', encoding='utf8') as file:
-          file.write(data)
+        perl -p -e '
+          my $version = "${{ inputs.version }}";
+          $version =~ s/V//g;
+          my $fileVersion = $version.",0";
+          $fileVersion =~ s/\./,/g;
+          s/\@FileVersion/$fileVersion/g;
+          s/\@Version/$version/g;
+        ' .github/build/Windows/Techmino.rc.template > Techmino.rc
     - name: Pack Techmino
       shell: pwsh
       run: |

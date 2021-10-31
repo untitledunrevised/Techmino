@@ -60,36 +60,24 @@ runs:
       run: |
         7z a -tzip love-android/app/src/main/assets/game.love libAndroid
     - name: update Android information
-      shell: python
+      shell: bash
       run: |
-        if '${{ inputs.type }}' == 'Release':
-          appName = 'Techmino'
-          packageName = 'org.love2d.MrZ.Techmino'
-          edition = 'release'
-        elif '${{ inputs.type }}' == 'Snapshot':
-          appName = 'Techmino_Snapshot'
-          packageName = 'org.love2d.MrZ.Techmino.Snapshot'
-          edition = 'snapshot'
-        with open('./love-android/app/src/main/AndroidManifest.xml', "r+", encoding='utf-8') as file:
-          data = file.read()
-          data = data\
-            .replace('@appName', appName)\
-            .replace('@edition', edition)
-          file.seek(0)
-          file.truncate()
-          file.write(data)
-        with open("./love-android/app/build.gradle", "r+", encoding='utf-8') as file:
-          data = file.read()
-          data = data\
-            .replace('@packageName', packageName)\
-            .replace('@versionCode', '${{ inputs.apkCode }}')\
-            .replace('@versionName', '${{ inputs.name }}')\
-            .replace('@storePassword', '${{ inputs.KEY_STORE_PASSWORD }}')\
-            .replace('@keyAlias', '${{ inputs.ALIAS }}')\
-            .replace('@keyPassword', '${{ inputs.KEY_PASSWORD }}')
-          file.seek(0)
-          file.truncate()
-          file.write(data)
+        perl -p -e '
+          my $name = "${{ inputs.type }}"=="Release" ? "Techmino" : "Techmino_Snapshot";
+          my $edition = lc "${{ inputs.type }}";
+          s/\@appName/$name/g;
+          s/\@edition/$edition/g;
+        ' -i love-android/app/src/main/AndroidManifest.xml
+        perl -p -e '
+          my $packageName = "org.love2d.MrZ.Techmino";
+          $packageName .= ".Snapshot" if "${{ inputs.type }}"=="Snapshot";
+          s/\@packageName/$packageName/g;
+          s/\@versionCode/${{ inputs.apkCode }}/g;
+          s/\@versionName/${{ inputs.name }}/g;
+          s/\@storePassword/${{ inputs.KEY_STORE_PASSWORD }}/g;
+          s/\@keyAlias/${{ inputs.ALIAS }}/g;
+          s/\@keyPassword/${{ inputs.KEY_PASSWORD }}/g;
+        ' -i love-android/app/build.gradle
     - name: Build Techmino
       shell: bash
       run: |

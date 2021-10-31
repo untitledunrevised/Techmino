@@ -59,19 +59,16 @@ runs:
           MATCH_PASSWORD: '${{ inputs.FASTLANE_MATCH_PWD }}'
           MATCH_TOKEN: '${{ inputs.FASTLANE_MATCH_TOKEN }}'
     - name: Modify template
-      shell: python
+      shell: bash
       run: |
-        import datetime
-        from io import open
-        thisYear = str(datetime.datetime.today().year)
-        with open('./.github/build/macOS/info.plist.template', 'r', encoding='utf-8') as file:
-          data = file.read()
-          data = data\
-            .replace('@versionName', '${{ inputs.name }}'[1:])\
-            .replace('@thisYear', thisYear)\
-            .replace('@bundleId', '${{ inputs.APPLE_APP_IDENTIFIER }}')
-        with open('./Techmino-macOS/Techmino.app/Contents/info.plist', 'w+', encoding='utf-8') as file:
-          file.write(data)
+        perl -p -e '
+          use Time::Piece;
+          my $version = substr("${{ inputs.name }}", 0, -1);
+          my $thisYear = Time::Piece->new->year;
+          s/\@versionName/$version/g;
+          s/\@thisYear/$thisYear/g;
+          s/\@bundleId/${{ inputs.APPLE_APP_IDENTIFIER }}/g;
+        ' .github/build/macOS/info.plist.template > Techmino-macOS/Techmino.app/Contents/info.plist
     - name: Pack
       shell: bash
       run: |
