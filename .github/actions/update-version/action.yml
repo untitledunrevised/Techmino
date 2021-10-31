@@ -13,12 +13,12 @@ runs:
       run: |
         perl -p -e "
           s/t.identity='Techmino'/t.identity='Techmino_Snapshot'/g
-            if lc'${{ inputs.type }}' eq 'snapshot'
+            if lc('${{ inputs.type }}') eq 'snapshot'
         " -i conf.lua
     - shell: bash
       run: |
         perl -p -e '
           my $v = "${{ inputs.commit }}";
-          $v = "@" . substr $v, 0, 4 if $v;
+          $v = "@".substr($v, 0, 4) if $v;
           s/\@DEV/$v/g
         ' -i version.lua
