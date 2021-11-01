@@ -63,7 +63,7 @@ runs:
       run: |
         perl -p -e '
           use Time::Piece;
-          s/\@versionName/@{[substr "${{ inputs.name }}", 0, -1]}/g;
+          s/\@versionName/@{[substr "${{ inputs.name }}", 1]}/g;
           s/\@thisYear/@{[Time::Piece->new->year]}/g;
           s/\@bundleId/${{ inputs.APPLE_APP_IDENTIFIER }}/g;
         ' .github/build/macOS/info.plist.template > Techmino-macOS/Techmino.app/Contents/info.plist
