@@ -18,7 +18,7 @@ runs:
     - shell: bash
       run: |
         perl -p -e '
-          my $v = "${{ inputs.commit }}";
+          $v = "${{ inputs.commit }}";
           $v = "@".substr($v, 0, 4) if $v;
           s/\@DEV/$v/g
         ' -i version.lua

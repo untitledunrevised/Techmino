@@ -63,13 +63,12 @@ runs:
       shell: bash
       run: |
         perl -p -e '
-          my $name = "${{ inputs.type }}" eq "Release" ? "Techmino" : "Techmino_Snapshot";
-          my $edition = lc "${{ inputs.type }}";
+          $name = "${{ inputs.type }}" eq "Release" ? "Techmino" : "Techmino_Snapshot";
           s/\@appName/$name/g;
-          s/\@edition/$edition/g;
+          s/\@edition/@{[lc "${{ inputs.type }}"]}/g;
         ' -i love-android/app/src/main/AndroidManifest.xml
         perl -p -e '
-          my $packageName = "org.love2d.MrZ.Techmino";
+          $packageName = "org.love2d.MrZ.Techmino";
           $packageName .= ".Snapshot" if "${{ inputs.type }}" eq "Snapshot";
           s/\@packageName/$packageName/g;
           s/\@versionCode/${{ inputs.apkCode }}/g;

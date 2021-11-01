@@ -34,9 +34,9 @@ runs:
       shell: bash
       run: |
         perl -p -e '
-          my $version = "${{ inputs.version }}";
+          $version = "${{ inputs.version }}";
           $version =~ s/V//g;
-          my $fileVersion = $version.",0";
+          $fileVersion = $version.",0";
           $fileVersion =~ s/\./,/g;
           s/\@FileVersion/$fileVersion/g;
           s/\@Version/$version/g;
