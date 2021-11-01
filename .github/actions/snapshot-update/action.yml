@@ -1,0 +1,28 @@
+name: 'snapshot update'
+description: 'common update logic for snapshot'
+inputs:
+  commit:
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - shell: python
+      name: update snapshot saving folder
+      run: |
+        from io import open
+        with open('conf.lua', 'r+', encoding='utf-8') as file:
+          data = file.read()
+          data = data.replace("t.identity='Techmino'--Saving folder", "t.identity='Techmino_Snapshot'--Saving folder")
+          file.seek(0)
+          file.truncate()
+          file.flush()
+          file.write(data)
+    - shell: bash
+      run: |
+        lua -e '
+          version = require"version"
+          TABLE = require"Zframework/tableExtend"
+          version.string = version.string.."@"..("${{ inputs.commit }}"):sub(1, 4)
+          print(TABLE.dump(version))
+        ' > version-temp.lua
+        mv version-temp.lua version.lua
