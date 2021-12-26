@@ -137,7 +137,7 @@ runs:
         [[ $(security find-identity) =~ (Developer ID Installer:[^\)]*\)) ]]
 
         productsign --sign \
-        ${BASH_REMATCH[1]} \
+        "${BASH_REMATCH[1]}" \
         Techmino-macOS/Techmino.pkg \
         Techmino-macOS/Techmino_signed.pkg
 
