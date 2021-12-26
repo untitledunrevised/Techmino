@@ -193,7 +193,7 @@ runs:
         security unlock-keychain -p ${{ inputs.TEMP_KEYCHAIN_PASSWORD }} \
         ~/Library/Keychains/${{ inputs.TEMP_KEYCHAIN_USER }}-db
 
-        [[ $(security find-identity) =~ ([0-9A-F]{40}) ]]
+        [[ $(security find-identity) =~ (Developer ID Installer:.*\)) ]]
 
         codesign --timestamp --force --strict --deep -v \
         --options runtime \
