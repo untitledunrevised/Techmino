@@ -49,7 +49,7 @@ runs:
       with:
         repository: "26F-Studio/Techmino-macOS"
         path: "Techmino-macOS"
-
+        
     - name: Download ColdClear
       uses: ./.github/actions/get-cc
       with:
@@ -134,7 +134,7 @@ runs:
         security unlock-keychain -p ${{ inputs.TEMP_KEYCHAIN_PASSWORD }} \
         ~/Library/Keychains/${{ inputs.TEMP_KEYCHAIN_USER }}-db
 
-        [[ $(security find-identity) =~ ([0-9A-F]{40}) ]]
+        [[ $(security find-identity) =~ (Developer ID Installer:[^\)]*\)) ]]
 
         productsign --sign \
         ${BASH_REMATCH[1]} \
@@ -151,7 +151,7 @@ runs:
         API_ISSUER: "${{ inputs.APPLE_API_ISSUER }}"
         API_KEY: "${{ inputs.APPLE_API_KEY }}"
         APP_IDENTIFIER: "${{ inputs.APPLE_APP_IDENTIFIER }}"
-        NOTARIZE_OBJECT: "Techmino_signed.pkg"
+        NOTARIZE_OBJECT: "Techmino_signed.pkg"    
 
     - name: Upload to Appstore & TestFlight
       uses: maierj/fastlane-action@v2.0.1
@@ -162,14 +162,14 @@ runs:
         API_ID: "${{ inputs.APPLE_API_ID }}"
         API_ISSUER: "${{ inputs.APPLE_API_ISSUER }}"
         API_KEY: "${{ inputs.APPLE_API_KEY }}"
-        APP_CHANGELOG: "${{ inputs.APPLE_APP_CHANGELOG }}"
+        APP_CHANGELOG: '${{ inputs.APPLE_APP_CHANGELOG }}'
         APP_IDENTIFIER: "${{ inputs.APPLE_APP_IDENTIFIER }}"
         KEYCHAIN_NAME: "${{ inputs.APPLE_KEYCHAIN_NAME }}"
         KEYCHAIN_PWD: "${{ inputs.APPLE_KEYCHAIN_PWD }}"
         MATCH_PASSWORD: "${{ inputs.FASTLANE_MATCH_PWD }}"
         MATCH_TOKEN: "${{ inputs.FASTLANE_MATCH_TOKEN }}"
         NOTARIZE_OBJECT: "Techmino_signed.pkg"
-
+          
     - name: Create DMG file
       shell: bash
       run: |
@@ -193,7 +193,7 @@ runs:
         security unlock-keychain -p ${{ inputs.TEMP_KEYCHAIN_PASSWORD }} \
         ~/Library/Keychains/${{ inputs.TEMP_KEYCHAIN_USER }}-db
 
-        [[ $(security find-identity) =~ (Developer ID Installer:.*\)) ]]
+        [[ $(security find-identity) =~ ([0-9A-F]{40}) ]]
 
         codesign --timestamp --force --strict --deep -v \
         --options runtime \
