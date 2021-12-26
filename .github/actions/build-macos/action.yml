@@ -134,7 +134,9 @@ runs:
         security unlock-keychain -p ${{ inputs.TEMP_KEYCHAIN_PASSWORD }} \
         ~/Library/Keychains/${{ inputs.TEMP_KEYCHAIN_USER }}-db
 
-        [[ $(security find-identity) =~ (Developer ID Installer:[^\)]*\)) ]]
+        [[ $(security find-identity) =~ (Developer ID[^\)]*\)) ]]
+
+        echo "${BASH_REMATCH[1]}"
 
         productsign --sign \
         "${BASH_REMATCH[1]}" \
