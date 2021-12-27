@@ -34,6 +34,9 @@ inputs:
   APPLE_KEYCHAIN_PWD:
     required: true
     description: "Temporary keychain password"
+  FASTLANE_DISCORD_WEBHOOK:
+    required: true
+    description: "Fastlane Discord webhook"
   FASTLANE_MATCH_PWD:
     required: true
     description: "Fastlane Match description password"
@@ -131,17 +134,17 @@ runs:
         /Applications \
         "Techmino-macOS/Techmino.pkg"
 
-    - name: Fastlane notarize
-      uses: maierj/fastlane-action@v2.0.1
-      with:
-        lane: "make_safe"
-        subdirectory: "Techmino-macOS"
-      env:
-        API_ID: "${{ inputs.APPLE_API_ID }}"
-        API_ISSUER: "${{ inputs.APPLE_API_ISSUER }}"
-        API_KEY: "${{ inputs.APPLE_API_KEY }}"
-        APP_IDENTIFIER: "${{ inputs.APPLE_APP_IDENTIFIER }}"
-        NOTARIZE_OBJECT: "Techmino.pkg"    
+    # - name: Fastlane notarize
+    #   uses: maierj/fastlane-action@v2.0.1
+    #   with:
+    #     lane: "make_safe"
+    #     subdirectory: "Techmino-macOS"
+    #   env:
+    #     API_ID: "${{ inputs.APPLE_API_ID }}"
+    #     API_ISSUER: "${{ inputs.APPLE_API_ISSUER }}"
+    #     API_KEY: "${{ inputs.APPLE_API_KEY }}"
+    #     APP_IDENTIFIER: "${{ inputs.APPLE_APP_IDENTIFIER }}"
+    #     NOTARIZE_OBJECT: "Techmino.pkg"    
 
     - name: Upload to Appstore & TestFlight
       uses: maierj/fastlane-action@v2.0.1
@@ -155,6 +158,7 @@ runs:
         APP_CHANGELOG: "${{ inputs.APPLE_APP_CHANGELOG }}"
         APP_ID: "${{ inputs.APPLE_APP_ID }}"
         APP_IDENTIFIER: "${{ inputs.APPLE_APP_IDENTIFIER }}"
+        DISCORD_WEBHOOK: '${{ inputs.FASTLANE_DISCORD_WEBHOOK }}'
         KEYCHAIN_NAME: "${{ inputs.APPLE_KEYCHAIN_NAME }}"
         KEYCHAIN_PWD: "${{ inputs.APPLE_KEYCHAIN_PWD }}"
         MATCH_PASSWORD: "${{ inputs.FASTLANE_MATCH_PWD }}"
