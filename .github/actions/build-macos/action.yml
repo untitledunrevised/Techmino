@@ -98,9 +98,6 @@ runs:
     - name: Codesign executable
       shell: bash
       run: |
-        security unlock-keychain -p ${{ inputs.APPLE_KEYCHAIN_PWD }} \
-        ~/Library/Keychains/${{ inputs.APPLE_KEYCHAIN_NAME }}-db
-
         [[ $(security find-identity) =~ ([0-9A-F]{40}) ]]
 
         codesign --timestamp --force --strict --deep -v \
@@ -131,13 +128,11 @@ runs:
     - name: Productsign DMG
       shell: bash
       run: |
-        security unlock-keychain -p ${{ inputs.APPLE_KEYCHAIN_PWD }} \
-        ~/Library/Keychains/${{ inputs.APPLE_KEYCHAIN_NAME }}-db
-
         security set-key-partition-list \
         -S apple-tool:,apple:, \
-        -s -k ${{ inputs.APPLE_KEYCHAIN_PWD }}
-        
+        -s -k ${{ inputs.APPLE_KEYCHAIN_PWD }} \
+        -t private ${{ inputs.APPLE_KEYCHAIN_NAME }}-db
+
         [[ $(security find-identity) =~ (Developer ID Installer[^\)]*\)) ]]
 
         productsign --sign \
@@ -194,9 +189,6 @@ runs:
     - name: Codesign DMG
       shell: bash
       run: |
-        security unlock-keychain -p ${{ inputs.APPLE_KEYCHAIN_PWD }} \
-        ~/Library/Keychains/${{ inputs.APPLE_KEYCHAIN_NAME }}-db
-
         [[ $(security find-identity) =~ ([0-9A-F]{40}) ]]
 
         codesign --timestamp --force --strict --deep -v \
