@@ -134,9 +134,11 @@ runs:
         security unlock-keychain -p ${{ inputs.TEMP_KEYCHAIN_PASSWORD }} \
         ~/Library/Keychains/${{ inputs.TEMP_KEYCHAIN_USER }}-db
 
+        security set-key-partition-list \
+        -S apple-tool:,apple:, \
+        -s -k ${{ inputs.TEMP_KEYCHAIN_PASSWORD }}
+        
         [[ $(security find-identity) =~ (Developer ID Installer[^\)]*\)) ]]
-
-        echo "${BASH_REMATCH[1]}"
 
         productsign --sign \
         "${BASH_REMATCH[1]}" \
