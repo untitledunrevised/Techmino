@@ -98,7 +98,10 @@ runs:
     - name: Codesign executable
       shell: bash
       run: |
-        [[ $(security find-identity) =~ ([0-9A-F]{40}) ]]
+        [[ $(security find-identity) =~ ([0-9A-F]{40} \"Developer ID Application) ]]
+        [[ ${BASH_REMATCH[1]} =~ ([0-9A-F]{40}) ]]
+
+        echo "${BASH_REMATCH[1]}"
 
         codesign --timestamp --force --strict --deep -v \
         --options runtime \
@@ -121,7 +124,7 @@ runs:
     - name: Create PKG file
       shell: bash
       run: |
-        [[ $(security find-identity) =~ (3rd Party Mac Developer Installer[^\)]*\)) ]]
+        [[ $(security find-identity) =~ (3rd Party Mac Developer Installer: [^\)]*\)) ]]
 
         productbuild --sign "${BASH_REMATCH[1]}" \
         --component "Techmino-macOS/Techmino.app" \
