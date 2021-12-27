@@ -121,7 +121,7 @@ runs:
     - name: Create PKG file
       shell: bash
       run: |
-        [[ $(security find-identity) =~ (Developer ID Installer[^\)]*\)) ]]
+        [[ $(security find-identity) =~ (3rd Party Mac Developer Installer[^\)]*\)) ]]
 
         productbuild --sign "${BASH_REMATCH[1]}" \
         --component "Techmino-macOS/Techmino.app" \
