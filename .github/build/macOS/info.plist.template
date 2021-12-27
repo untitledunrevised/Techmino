@@ -18,6 +18,8 @@
     <string>Techmino</string>
     <key>CFBundlePackageType</key>
     <string>APPL</string>
+    <key>CFBundleVersion</key>
+    <string>@versionName</string>
     <key>CFBundleShortVersionString</key>
     <string>@versionName</string>
     <key>CFBundleSignature</key>

@@ -125,6 +125,7 @@ runs:
 
         productbuild --sign "${BASH_REMATCH[1]}" \
         --component "Techmino-macOS/Techmino.app" \
+        /Applications \
         "Techmino-macOS/Techmino.pkg"
 
     - name: Fastlane notarize
