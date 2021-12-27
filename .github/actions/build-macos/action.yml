@@ -127,16 +127,6 @@ runs:
         --component "Techmino-macOS/Techmino.app" \
         "Techmino-macOS/Techmino.pkg"
 
-    # - name: Productsign PKG
-    #   shell: bash
-    #   run: |
-    #     [[ $(security find-identity) =~ (Developer ID Installer[^\)]*\)) ]]
-
-    #     productsign --sign \
-    #     "${BASH_REMATCH[1]}" \
-    #     Techmino-macOS/Techmino.pkg \
-    #     Techmino-macOS/Techmino_signed.pkg
-
     - name: Fastlane notarize
       uses: maierj/fastlane-action@v2.0.1
       with:
@@ -149,22 +139,22 @@ runs:
         APP_IDENTIFIER: "${{ inputs.APPLE_APP_IDENTIFIER }}"
         NOTARIZE_OBJECT: "Techmino.pkg"    
 
-    - name: Upload to Appstore & TestFlight
-      uses: maierj/fastlane-action@v2.0.1
-      with:
-        lane: "${{ inputs.type }}"
-        subdirectory: "Techmino-macOS"
-      env:
-        API_ID: "${{ inputs.APPLE_API_ID }}"
-        API_ISSUER: "${{ inputs.APPLE_API_ISSUER }}"
-        API_KEY: "${{ inputs.APPLE_API_KEY }}"
-        APP_CHANGELOG: '${{ inputs.APPLE_APP_CHANGELOG }}'
-        APP_IDENTIFIER: "${{ inputs.APPLE_APP_IDENTIFIER }}"
-        KEYCHAIN_NAME: "${{ inputs.APPLE_KEYCHAIN_NAME }}"
-        KEYCHAIN_PWD: "${{ inputs.APPLE_KEYCHAIN_PWD }}"
-        MATCH_PASSWORD: "${{ inputs.FASTLANE_MATCH_PWD }}"
-        MATCH_TOKEN: "${{ inputs.FASTLANE_MATCH_TOKEN }}"
-        NOTARIZE_OBJECT: "Techmino.pkg"
+    # - name: Upload to Appstore & TestFlight
+    #   uses: maierj/fastlane-action@v2.0.1
+    #   with:
+    #     lane: "${{ inputs.type }}"
+    #     subdirectory: "Techmino-macOS"
+    #   env:
+    #     API_ID: "${{ inputs.APPLE_API_ID }}"
+    #     API_ISSUER: "${{ inputs.APPLE_API_ISSUER }}"
+    #     API_KEY: "${{ inputs.APPLE_API_KEY }}"
+    #     APP_CHANGELOG: '${{ inputs.APPLE_APP_CHANGELOG }}'
+    #     APP_IDENTIFIER: "${{ inputs.APPLE_APP_IDENTIFIER }}"
+    #     KEYCHAIN_NAME: "${{ inputs.APPLE_KEYCHAIN_NAME }}"
+    #     KEYCHAIN_PWD: "${{ inputs.APPLE_KEYCHAIN_PWD }}"
+    #     MATCH_PASSWORD: "${{ inputs.FASTLANE_MATCH_PWD }}"
+    #     MATCH_TOKEN: "${{ inputs.FASTLANE_MATCH_TOKEN }}"
+    #     NOTARIZE_OBJECT: "Techmino.pkg"
           
     - name: Create DMG file
       shell: bash
@@ -209,5 +199,6 @@ runs:
     - name: Finalize
       shell: bash
       run: |
+        cp -r Techmino-macOS/Techmino.pkg Techmino.pkg
         cp -r Techmino-macOS/Techmino-macOS.dmg Techmino.dmg
         spctl -a -t open --context context:primary-signature -vv Techmino.dmg
