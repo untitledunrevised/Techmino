@@ -98,10 +98,11 @@ runs:
         chmod +x Techmino-macOS/Techmino.app/Contents/Frameworks/CCloader.dylib
         chmod +x Techmino-macOS/Techmino.app/Contents/MacOS/love
 
+    #  [[ $(security find-identity) =~ ([0-9A-F]{40} \"Developer ID Application) ]]
     - name: Codesign executable
       shell: bash
       run: |
-        [[ $(security find-identity) =~ ([0-9A-F]{40} \"Developer ID Application) ]]
+        [[ $(security find-identity) =~ ([0-9A-F]{40} \"3rd Party Mac Developer Installer) ]]
         [[ ${BASH_REMATCH[1]} =~ ([0-9A-F]{40}) ]]
 
         echo "${BASH_REMATCH[1]}"
@@ -112,17 +113,17 @@ runs:
         --entitlements Techmino-macOS/love.entitlements \
         Techmino-macOS/Techmino.app
 
-    - name: Fastlane notarize
-      uses: maierj/fastlane-action@v2.0.1
-      with:
-        lane: "make_safe"
-        subdirectory: "Techmino-macOS"
-      env:
-        API_ID: "${{ inputs.APPLE_API_ID }}"
-        API_ISSUER: "${{ inputs.APPLE_API_ISSUER }}"
-        API_KEY: "${{ inputs.APPLE_API_KEY }}"
-        APP_IDENTIFIER: "${{ inputs.APPLE_APP_IDENTIFIER }}"
-        NOTARIZE_OBJECT: "Techmino.app"
+    # - name: Fastlane notarize
+    #   uses: maierj/fastlane-action@v2.0.1
+    #   with:
+    #     lane: "make_safe"
+    #     subdirectory: "Techmino-macOS"
+    #   env:
+    #     API_ID: "${{ inputs.APPLE_API_ID }}"
+    #     API_ISSUER: "${{ inputs.APPLE_API_ISSUER }}"
+    #     API_KEY: "${{ inputs.APPLE_API_KEY }}"
+    #     APP_IDENTIFIER: "${{ inputs.APPLE_APP_IDENTIFIER }}"
+    #     NOTARIZE_OBJECT: "Techmino.app"
 
     - name: Create PKG file
       shell: bash
