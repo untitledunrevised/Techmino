@@ -460,7 +460,6 @@ return{
             atkFX="攻擊特效",
 
             frame="渲染幀率(%)",
-            FTlock="跳幀",
 
             text="清除文本",
             score="分數動畫",
@@ -688,6 +687,7 @@ return{
             register="註冊",
             email="電郵",
             password="密碼",
+            showEmail="顯示郵箱",
             keepPW="保存密碼",
             login="登錄",
         },

@@ -461,7 +461,6 @@ return{
             atkFX="Efek Serang",
 
             frame="Kecepatan Bingkai (%)",
-            FTlock="Lewat Bingkai",
 
             text="Teks Baris",
             score="Teks Nilai",
@@ -690,6 +689,7 @@ return{
             register="Daftar",
             email="Alamat Email",
             password="Password",
+            -- showEmail="Show Email",
             keepPW="Ingat Saya",
             login="Masuk",
         },

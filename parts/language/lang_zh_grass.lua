@@ -458,7 +458,6 @@ return{
             atkFX="攻击外汇",
 
             frame="渲染帧率(%)",
-            FTlock="逻辑追帧",
 
             text="行清除弹出窗口",
             score="分数弹出",
@@ -686,6 +685,7 @@ return{
             register="登记",
             email="电子邮件地址",
             password="密码",
+            showEmail="显示电子邮件",
             keepPW="记得我吗",
             login="登录",
         },

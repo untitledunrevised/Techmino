@@ -460,7 +460,6 @@ return{
             atkFX="攻击特效:",
 
             frame="绘制帧率(%):",
-            FTlock="逻辑追帧",
 
             text="消行文本",
             score="分数动画",
@@ -688,6 +687,7 @@ return{
             register="注册",
             email="邮箱",
             password="密码",
+            showEmail="显示邮箱",
             keepPW="保存密码",
             login="登录",
         },

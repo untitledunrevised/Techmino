@@ -461,7 +461,6 @@ return{
             atkFX="攻撃演出",
 
             frame="レンダリングフレームレート(%)",
-            FTlock="フレームスキップ",
 
             text="ライン消去ポップ",
             score="スコアポップ",
@@ -690,6 +689,7 @@ return{
             register="サインアップ",
             email="Eメールアドレス",
             password="パスワード",
+            -- showEmail="Show Email",
             keepPW="常にログイン",
             login="ログイン",
         },

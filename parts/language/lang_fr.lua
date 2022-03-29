@@ -423,7 +423,6 @@ return{
             atkFX="Effets d'attaque",
 
             frame="Montrer les FPS(%)",
-            -- FTlock="Frame-Time Lock",
 
             text="Texte d'action",
             score="Pop-up de score",
@@ -642,6 +641,7 @@ return{
             register="Enregistrement",
             email="E-mail",
             password="Mot de passe",
+            -- showEmail="Show Email",
             -- keepPW="Remember me",
             login="Connexion",
         },

@@ -448,7 +448,6 @@ return{
             atkFX="Nível FX Atk.",
 
             frame="Render Frame Rate(%)",
-            -- FTlock="Frame-Time Lock",
 
             text="Texto de ação",
             score="Pop-up de pontos",
@@ -678,6 +677,7 @@ return{
             register="Registrar",
             email="Endereço De Email",
             password="Senha",
+            -- showEmail="Show Email",
             -- keepPW="Remember me",
             login="Log in",
         },

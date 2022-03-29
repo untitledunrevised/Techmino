@@ -459,7 +459,6 @@ return{
             atkFX="Atk FX",
 
             frame="Render Frame Rate (%)",
-            FTlock="Frame skip",
 
             text="Line Clear Pop-Ups",
             score="Score Pop-Ups",
@@ -688,6 +687,7 @@ return{
             register="Sign Up",
             email="Email Address",
             password="Password",
+            showEmail="Show Email",
             keepPW="Remember me",
             login="Log In",
         },
