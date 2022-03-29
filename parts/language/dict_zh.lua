@@ -1062,7 +1062,7 @@ return{
         "pattern",
         "两个T2形状叠在一起。"..HDwiki,
         HDsearch.."Fractal",
-    }
+    },
     {"LST堆叠",
         "lst",
         "pattern",
